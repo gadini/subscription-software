@@ -1,4 +1,4 @@
-package com.github.gadini.subscription_software.config.exception;
+package com.github.gadini.subscription_software.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
