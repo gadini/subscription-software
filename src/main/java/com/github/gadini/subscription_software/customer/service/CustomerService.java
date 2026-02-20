@@ -1,6 +1,6 @@
 package com.github.gadini.subscription_software.customer.service;
 
-import com.github.gadini.subscription_software.config.exception.NotFoundException;
+import com.github.gadini.subscription_software.exception.NotFoundException;
 import com.github.gadini.subscription_software.customer.dto.CustomerRequestDto;
 import com.github.gadini.subscription_software.customer.dto.CustomerResponseDto;
 import com.github.gadini.subscription_software.customer.entity.Customer;
