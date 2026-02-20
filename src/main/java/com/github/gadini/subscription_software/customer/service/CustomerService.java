@@ -34,4 +34,9 @@ public class CustomerService {
         Customer customer = customerRepository.findById(id).orElseThrow( () -> new NotFoundException(Customer.class.getName(), id));
         return customerMapper.toResponse(customer);
     }
+
+    public void deleteCustomerById(Long id){
+        Customer customer = customerRepository.findById(id).orElseThrow( () -> new NotFoundException(Customer.class.getName(), id));
+        customerRepository.delete(customer);
+    }
 }

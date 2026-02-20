@@ -4,7 +4,13 @@ import com.github.gadini.subscription_software.customer.dto.CustomerRequestDto;
 import com.github.gadini.subscription_software.customer.dto.CustomerResponseDto;
 import com.github.gadini.subscription_software.customer.service.CustomerService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -20,7 +26,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<CustomerResponseDto> create(@RequestBody CustomerRequestDto customerRequestDto){
+    public ResponseEntity<CustomerResponseDto> createCustomer(@RequestBody CustomerRequestDto customerRequestDto){
         CustomerResponseDto responseDto = customerService.saveCustomer(customerRequestDto);
 
         URI uri = ServletUriComponentsBuilder
@@ -34,6 +40,12 @@ public class CustomerController {
     @GetMapping(value = "/{customerId}")
     public ResponseEntity<CustomerResponseDto> getCustomerById(@PathVariable Long customerId){
         return ResponseEntity.ok(customerService.getCustomerById(customerId));
+    }
+
+    @DeleteMapping(value = "/{customerId}")
+    public ResponseEntity<Void> deleteCustomerById(@PathVariable Long customerId){
+        customerService.deleteCustomerById(customerId);
+        return ResponseEntity.noContent().build();
     }
 
 }
