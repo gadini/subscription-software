@@ -7,6 +7,8 @@ import com.github.gadini.subscription_software.customer.entity.Customer;
 import com.github.gadini.subscription_software.customer.enums.CustomerStatusEnum;
 import com.github.gadini.subscription_software.customer.mapper.CustomerMapper;
 import com.github.gadini.subscription_software.customer.repository.CustomerRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +35,11 @@ public class CustomerService {
     public CustomerResponseDto getCustomerById(Long id){
         Customer customer = customerRepository.findById(id).orElseThrow( () -> new NotFoundException(Customer.class.getName(), id));
         return customerMapper.toResponse(customer);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<CustomerResponseDto> findAllCustomers(Pageable pageable){
+        return customerRepository.findAll(pageable).map(customerMapper::toResponse);
     }
 
     public void deleteCustomerById(Long id){

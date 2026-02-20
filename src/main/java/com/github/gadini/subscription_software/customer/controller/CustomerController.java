@@ -3,6 +3,9 @@ package com.github.gadini.subscription_software.customer.controller;
 import com.github.gadini.subscription_software.customer.dto.CustomerRequestDto;
 import com.github.gadini.subscription_software.customer.dto.CustomerResponseDto;
 import com.github.gadini.subscription_software.customer.service.CustomerService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +43,11 @@ public class CustomerController {
     @GetMapping(value = "/{customerId}")
     public ResponseEntity<CustomerResponseDto> getCustomerById(@PathVariable Long customerId){
         return ResponseEntity.ok(customerService.getCustomerById(customerId));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<CustomerResponseDto>> listAllCustormers(@PageableDefault(size = 30) Pageable pageable){
+        return ResponseEntity.ok(customerService.findAllCustomers(pageable));
     }
 
     @DeleteMapping(value = "/{customerId}")
