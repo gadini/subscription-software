@@ -1,5 +1,6 @@
 package com.github.gadini.subscription_software.customer.service;
 
+import com.github.gadini.subscription_software.customer.dto.PatchCustomerRequestDto;
 import com.github.gadini.subscription_software.exception.NotFoundException;
 import com.github.gadini.subscription_software.customer.dto.CustomerRequestDto;
 import com.github.gadini.subscription_software.customer.dto.CustomerResponseDto;
@@ -40,6 +41,13 @@ public class CustomerService {
     @Transactional(readOnly = true)
     public Page<CustomerResponseDto> findAllCustomers(Pageable pageable){
         return customerRepository.findAll(pageable).map(customerMapper::toResponse);
+    }
+
+    @Transactional
+    public CustomerResponseDto patchCustomerById(Long id, PatchCustomerRequestDto requestDto) {
+        Customer customer = customerRepository.findById(id).orElseThrow( () -> new NotFoundException(Customer.class.getName(), id));
+        customerMapper.toPatch(requestDto, customer);
+        return customerMapper.toResponse(customerRepository.save(customer));
     }
 
     public void deleteCustomerById(Long id){
